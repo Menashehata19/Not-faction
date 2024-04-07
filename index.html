@@ -8,31 +8,36 @@
 </head>
 <body>
   
-<button id="sendnot">Send Notfactio </button>
-
-
-  <script>
-    
-    let btn = document.getElementById('sendnot');
-
-btn.addEventListener('click', () =>{
-  !Notification && null ;
-  
-  Notification.requestPermission().then(showNotification)
+  <button id="notificationButton">Send Notification</button>
   
   
-})
+<script>
+  // Check if the Notification API is supported
+if ('Notification' in window) {
+  // Get a reference to the button
+  const button = document.getElementById('notificationButton');
 
-function showNotification(permission) {
-  // Tab to edit
-  let notification = new Notification('goggle',{
-    
-    body: 'google',
-    icon: "images.jpeg",
-    
-  })
-  
+  // Add a click event listener to the button
+  button.addEventListener('click', () => {
+    // Request permission to show notifications
+    Notification.requestPermission().then((permission) => {
+      // If the user grants permission
+      if (permission === 'granted') {
+        // Create a new notification with a custom icon and title
+        const notification = new Notification('Hello, World!', {
+          icon: 'images.jpeg',
+          body: 'This is the body of the notification',
+        });
+      } else {
+        // If the user denies permission or doesn't respond
+        alert('Notification permission denied or not granted');
+      }
+    });
+  });
+} else {
+  // If the Notification API is not supported
+  alert('Notification API not supported');
 }
-  </script>
+</script>
 </body>
 </html>
